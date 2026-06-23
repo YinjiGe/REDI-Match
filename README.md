@@ -94,14 +94,3 @@ Correct matching is consistently accompanied by low-entropy distributions across
 ## 📦 Code & Models
 
 > 🚧 **Coming Soon** — Code, pretrained weights, and inference demo will be released upon publication. Stay tuned!
-
-## 📝 Citation
-
-```bibtex
-@article{ge2025redimatch,
-  title   = {REDI-Match: Rotation-Equivariant Distillation for Efficient and Robust Dense Matching},
-  author  = {Ge, Yinji and Zheng, Guixu and Guo, Wulong and Feng, Qian and Wu, Xu and Zhou, Kai and Liu, Xinyuan and Xing, Fei},
-  journal = {arXiv preprint},
-  year    = {2025}
-}
-```
