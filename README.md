@@ -101,7 +101,7 @@ Correct matching is consistently accompanied by low-entropy distributions across
 ## 📝 Citation
 
 ```bibtex
-@article{ge2025redimatch,
+@article{ge2026redimatch,
   title   = {REDI-Match: Rotation-Equivariant Distillation for Efficient and Robust Dense Matching},
   author  = {Ge, Yinji and Zheng, Guixu and Guo, Wulong and Feng, Qian and Wu, Xu and Zhou, Kai and Liu, Xinyuan and Xing, Fei},
   journal = {arXiv preprint arXiv:2606.24330},
