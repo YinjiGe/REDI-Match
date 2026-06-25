@@ -8,6 +8,9 @@
 
 <small><sup>*</sup> Equal contribution &nbsp; <sup>†</sup> Corresponding authors</small>
 
+[![arXiv](https://img.shields.io/badge/arXiv-2606.24330-b31b1b.svg)](https://arxiv.org/abs/2606.24330)
+[![PDF](https://img.shields.io/badge/PDF-Paper-blue)](https://arxiv.org/pdf/2606.24330)
+
 ## 📄 Abstract
 
 Vision Foundation Models (VFMs) have significantly advanced dense feature matching, yet severe in-plane rotation remains a critical challenge. Existing solutions face a fundamental dilemma: data-driven methods require inefficient parameter scaling to implicitly learn rotations, whereas strictly equivariant networks lack the semantic capacity of modern VFMs. To break this architectural bottleneck, we propose **REDI-Match**, an efficient framework driven by a novel **Rotation-Equivariant Distillation (REDI)** paradigm. Instead of relying on massive data augmentation, REDI distills the powerful semantics of a VFM into a lightweight, strictly rotation-equivariant encoder, structurally capturing geometric variations early at the feature level. To fully exploit these features, we equip the decoder with an entropy-driven spatial alignment module that explicitly locks onto the canonical coordinate system, eliminating global ambiguity before continuous refinement.
