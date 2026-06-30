@@ -51,7 +51,7 @@ Vision Foundation Models (VFMs) have significantly advanced dense feature matchi
 
 ![radar](assets/radar.png)
 
-REDI-Match achieves the best overall accuracy–efficiency trade-off across all benchmarks.
+REDI-Match achieves the best overall accuracy–efficiency trade-off across rotation benchmarks.
 
 ### Rotation Benchmarks (MegaDepth-C4 / ScanNet-C4 / HPatches-C4 / Rot360 / SatAst)
 
