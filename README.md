@@ -10,10 +10,23 @@
 
 [![arXiv](https://img.shields.io/badge/arXiv-2606.24330-b31b1b.svg)](https://arxiv.org/abs/2606.24330)
 [![PDF](https://img.shields.io/badge/PDF-Paper-blue)](https://arxiv.org/pdf/2606.24330)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+## 📑 Table of Contents
+
+- [Abstract](#-abstract)
+- [Key Highlights](#-key-highlights)
+- [Pipeline Overview](#-pipeline-overview)
+- [Results](#-results)
+- [Equivariance Analysis](#-equivariance-analysis)
+- [Entropy-Driven Rotation Detection](#-entropy-driven-rotation-detection)
+- [Code & Models](#-code--models)
+- [Citation](#-citation)
+- [Acknowledgments](#-acknowledgments)
 
 ## 📄 Abstract
 
-Vision Foundation Models (VFMs) have significantly advanced dense feature matching, yet severe in-plane rotation remains a critical challenge. Existing solutions face a fundamental dilemma: data-driven methods require inefficient parameter scaling to implicitly learn rotations, whereas strictly equivariant networks lack the semantic capacity of modern VFMs. To break this architectural bottleneck, we propose **REDI-Match**, an efficient framework driven by a novel **Rotation-Equivariant Distillation (REDI)** paradigm. Instead of relying on massive data augmentation, REDI distills the powerful semantics of a VFM into a lightweight, strictly rotation-equivariant encoder, structurally capturing geometric variations early at the feature level. To fully exploit these features, we equip the decoder with an entropy-driven spatial alignment module that explicitly locks onto the canonical coordinate system, eliminating global ambiguity before continuous refinement.
+Vision Foundation Models (VFMs) have significantly advanced dense feature matching, yet severe in-plane rotation remains a critical challenge. Existing solutions face a fundamental dilemma: data-driven methods require substantial parameter scaling to implicitly learn rotations, whereas strictly equivariant networks lack the semantic capacity of modern VFMs. To break this architectural bottleneck, we propose **REDI-Match**, an efficient framework driven by a novel **Rotation-Equivariant Distillation (REDI)** paradigm. Instead of relying on massive data augmentation, REDI distills the powerful semantics of a VFM into a lightweight, strictly rotation-equivariant encoder, structurally capturing geometric variations early at the feature level. To fully exploit these features, we equip the decoder with an entropy-driven spatial alignment module that explicitly locks onto the canonical coordinate system, eliminating global ambiguity before continuous refinement.
 
 ## 🎯 Key Highlights
 
@@ -80,13 +93,13 @@ All methods at 576×576, latency on single RTX 4090.
 
 ![qualitative](assets/qualitative.png)
 
-Across outdoor (MegaDepth-C4), indoor (ScanNet-C4), and remote sensing (SatAst) — REDI-Match consistently maintains dense, accurate alignments while SOTA methods suffer catastrophic failure on SatAst.
+Across outdoor (MegaDepth-C4), indoor (ScanNet-C4), and remote sensing (SatAst) — REDI-Match consistently maintains dense, accurate alignments while SOTA methods struggle on SatAst.
 
 ## ⚖️ Equivariance Analysis
 
 ![equivariance](assets/equivariance.png)
 
-Our distilled equivariant encoder preserves strict spatial and semantic consistency under rotation, achieving near-zero feature degradation. In contrast, standard non-equivariant foundation models exhibit severe structural collapse.
+Our distilled equivariant encoder preserves strict spatial and semantic consistency under rotation, achieving near-zero feature degradation. In contrast, standard non-equivariant foundation models exhibit notable feature degradation.
 
 ## 🔬 Entropy-Driven Rotation Detection
 
@@ -108,3 +121,14 @@ Correct matching is consistently accompanied by low-entropy distributions across
   year    = {2026}
 }
 ```
+
+## 🙏 Acknowledgments
+
+We gratefully thank the authors and maintainers of the following open-source projects that inspired and supported this work:
+
+- [**RoMa**](https://github.com/Parskatt/RoMa) — Robust Dense Feature Matching
+- [**RoMa v2**](https://github.com/Parskatt/RoMa) — Upgraded dense matcher with improved robustness
+- [**DINOv3**](https://github.com/facebookresearch/dinov2) — Self-supervised Vision Transformer
+- [**e2cnn**](https://github.com/QUVA-Lab/e2cnn) — Equivariant Steerable CNNs
+
+
