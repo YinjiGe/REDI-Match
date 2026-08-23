@@ -13,6 +13,7 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2606.24330-b31b1b.svg)](https://arxiv.org/abs/2606.24330)
 [![Paper](https://img.shields.io/badge/Paper-PDF-blue.svg)](https://arxiv.org/pdf/2606.24330)
 [![Weights](https://img.shields.io/badge/Weights-Hugging%20Face-yellow.svg)](https://huggingface.co/YinjiGe/REDI-Match)
+[![GitHub stars](https://img.shields.io/github/stars/YinjiGe/REDI-Match-0823?style=flat-square&logo=github)](https://github.com/YinjiGe/REDI-Match-0823)
 
 </div>
 
@@ -30,7 +31,9 @@ This repository is the runnable public release of REDI-Match for dense matching 
 - [Benchmark results](#benchmark-results)
 - [Latency](#latency)
 - [Release scope](#release-scope)
+- [TODO](#todo)
 - [Citation](#citation)
+- [Acknowledgments](#-acknowledgments)
 
 ## Abstract
 
@@ -208,7 +211,7 @@ The following results are reported in the paper. Unless noted otherwise, images 
 | Method | MegaDepth-C4 @5° | ScanNet-C4 @5° | HPatches-C4 @5° | Rot360 @5° | SatAst @5° |
 |---|---:|---:|---:|---:|---:|
 | RoMa v2 | 53.5 | 29.0 | 78.1 | 97.7 | 24.2 |
-| **REDI-Match** | **59.2** | **29.5** | **79.6** | **98.6** | **50.6** |
+| **REDI-Match** | **59.2** | **29.5** | **79.6** | **98.6** | **41.3** |
 
 ### Standard benchmarks and efficiency
 
@@ -245,25 +248,29 @@ This public repository contains inference-only code and does not include:
 - model training, EMA, experiment monitoring, or private data preparation code;
 - `escnn_lib`, DINOv3 teacher weights, or other training-only dependencies.
 
-## Release checks
+## TODO
 
-Run before publishing:
-
-```bash
-python scripts/check_release.py
-```
-
-To check the release boundary without local weights:
-
-```bash
-python scripts/check_release.py --skip-weights
-```
+- [x] Release benchmark evaluation scripts
+- [x] Release pretrained model weights
+- [x] Release inference visualization scripts
+- [x] Release evaluation dataset access instructions
+- [ ] Release REDI training code
+- [ ] Release model training code
+- [ ] Release model training datasets
 
 ## License
 
 Please add the license used by the project to the repository root before redistribution. Confirm that the example images, evaluation datasets, and pretrained weights comply with their respective licenses or distribution terms.
 
 ## Citation
+
+<div align="center">
+
+### ⭐ If you find REDI-Match useful, please star this repository!
+
+Your support helps us improve and maintain the project.
+
+</div>
 
 If you find this work useful, please cite our paper:
 
@@ -277,3 +284,11 @@ If you find this work useful, please cite our paper:
 ```
 
 Paper: [arXiv:2606.24330](https://arxiv.org/abs/2606.24330)
+
+## 🙏 Acknowledgments
+
+We gratefully thank the authors and maintainers of the following open-source projects that inspired and supported this work:
+
+- [**RoMa**](https://github.com/Parskatt/RoMa) — Robust dense feature matching
+- [**DINOv3**](https://github.com/facebookresearch/dinov3) — Self-supervised visual representation learning
+- [**e2cnn**](https://github.com/QUVA-Lab/e2cnn) — Equivariant steerable CNNs
