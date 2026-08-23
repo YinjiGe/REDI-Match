@@ -209,7 +209,7 @@ def main():
         model.decoder.c4_rotation_matching = True
         model.decoder.c4_perm_reverse = True
         model.decoder.c4_symmetric_reverse = "align_to_query"
-        # fundamental_hybrid 判向：必须用 OT(fundamental) 判向，不用单独余弦相似度
+        # Use OT (fundamental) for direction selection; do not use cosine similarity alone.
         model.decoder.c4_hybrid = True
         model.decoder.c4_hybrid_alpha = 0.35
         model.decoder.c4_hybrid_temp = 0.05

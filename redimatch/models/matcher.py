@@ -722,7 +722,7 @@ class Decoder(nn.Module):
         return out
 
     def _spatially_rotate_flow_map(self, flow: torch.Tensor, k) -> torch.Tensor:
-        """Grid rearrangement: inverse of _c4_spatial_unrotate(·,k), maps canonical query grid back to B_rot native indices."""
+        """Grid rearrangement: inverse of _c4_spatial_unrotate for canonical query grids."""
         if isinstance(k, int):
             if int(k) % 4 == 0:
                 return flow

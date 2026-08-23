@@ -4,7 +4,7 @@ import random as _random, numpy as _np
 def prepare_run_seed(args):
     s = getattr(args, "seed", None)
     if s is None:
-        return  # 不固定种子：使用系统随机
+        return  # Keep the seed unset and use system randomness.
     s = int(s)
     _random.seed(s); _np.random.seed(s)
     import torch; torch.manual_seed(s)

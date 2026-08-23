@@ -510,7 +510,7 @@ if __name__ == "__main__":
             if use_c4:
                 dec.c4_perm_reverse = bool(True)
                 dec.c4_symmetric_reverse = "align_to_query"
-                # fundamental_hybrid 判向：必须用 OT(fundamental) 判向，不用单独余弦相似度
+                # Use OT (fundamental) for direction selection; do not use cosine similarity alone.
                 dec.c4_hybrid = True
                 dec.c4_hybrid_alpha = 0.35
                 dec.c4_hybrid_temp = 0.05

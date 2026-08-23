@@ -1,25 +1,25 @@
-# REDI-Match public release
+# REDI-Match Public Release
 
-这是 REDI-Match 的可运行发布版，面向图像匹配推理、可视化和公开评估。
-仓库只包含必要的推理代码、评估脚本、示例数据和预训练权重的下载入口；训练、蒸馏、私有数据处理和内部实验代码不在发布范围内。
+This is the runnable REDI-Match release for image-matching inference, visualization, and public benchmarks.
+It includes only the inference runtime, evaluation scripts, example data, and instructions for downloading pretrained weights. Training, distillation, private data processing, and internal experiments are excluded.
 
-## 目录
+## Repository layout
 
 ```text
-demo/                         # 匹配可视化 demo
-eval/                         # MegaDepth、ScanNet、HPatches 等评估脚本
-redimatch/                   # 公开推理运行时
-assets/                      # demo 输入图像
-results/                     # 已生成的 demo 结果
-data/README.md               # 外部评估数据的目录约定
-scripts/download_weights.py  # 从 Hugging Face 下载权重
-scripts/check_release.py     # 发布边界和权重兼容性检查
-models/                       # 本地权重目录（*.pth 不提交 Git）
+demo/                         # Matching visualization demo
+eval/                         # MegaDepth, ScanNet, HPatches, and other benchmarks
+redimatch/                    # Public inference runtime
+assets/                       # Demo input images
+results/                      # Generated demo results
+data/README.md                # External evaluation data layout
+scripts/download_weights.py   # Download weights from Hugging Face
+scripts/check_release.py      # Check release boundaries and weight compatibility
+models/                       # Local weight directory (*.pth is not tracked by Git)
 ```
 
-## 环境安装
+## Installation
 
-建议使用 Python 3.12 和 CUDA 环境：
+Python 3.12 and a CUDA environment are recommended:
 
 ```bash
 conda create -n redimatch python=3.12 -y
@@ -27,17 +27,17 @@ conda activate redimatch
 pip install -r requirements.txt
 ```
 
-项目默认使用原生 PyTorch 相关算子，不需要安装 `escnn`、Fortran 编译器、DINOv3 或训练依赖。
-如果需要 CUDA 加速扩展，可在确认本机 PyTorch/CUDA 版本兼容后额外安装：
+The release uses native PyTorch operators by default. It does not require `escnn`, a Fortran compiler, DINOv3, or training dependencies.
+For optional CUDA extensions, first confirm compatibility with your local PyTorch and CUDA versions:
 
 ```bash
 pip install -r requirements-optional.txt
 ```
 
-## 预训练权重
+## Pretrained weights
 
-`indoor.pth` 和 `outdoor.pth` 是大文件，不应提交到 GitHub；请从 Hugging Face 模型仓库下载，代码仓库只保留 `models/.gitkeep`。
-当前预训练权重仓库为 [`YinjiGe/REDI-Match`](https://huggingface.co/YinjiGe/REDI-Match)：
+`indoor.pth` and `outdoor.pth` are large files and should not be committed to GitHub. Download them from the Hugging Face model repository; the code repository keeps only `models/.gitkeep`.
+The pretrained weights are hosted at [`YinjiGe/REDI-Match`](https://huggingface.co/YinjiGe/REDI-Match):
 
 ```bash
 pip install huggingface_hub
@@ -46,25 +46,25 @@ python scripts/download_weights.py \
   --output-dir models
 ```
 
-也可以手动下载并放置为：
+You can also download the files manually and place them at:
 
 ```text
 models/indoor.pth
 models/outdoor.pth
 ```
 
-如果模型仓库为私有仓库，请先执行 `huggingface-cli login`，或通过 `--token` 传入访问令牌。
+For a private model repository, run `huggingface-cli login` first or pass an access token with `--token`.
 
 ## Demo
 
-运行默认示例（默认使用 `remote_satast` 图像对和 outdoor 权重）：
+Run the default example. It uses the `remote_satast` image pair and the outdoor weights:
 
 ```bash
 python demo/demo_match.py
 ```
 
-结果保存在 `results/demo_match_symmetric.jpg` 和 `results/demo_match_warp.jpg`。
-可指定任意图像对、权重和输出位置；默认采样 10,000 个匹配点：
+Results are saved to `results/demo_match_symmetric.jpg` and `results/demo_match_warp.jpg`.
+You can specify any image pair, weight file, and output path. The default is 10,000 sampled matches:
 
 ```bash
 python demo/demo_match.py \
@@ -75,7 +75,7 @@ python demo/demo_match.py \
   --save_warp results/indoor_warp.jpg
 ```
 
-仓库中的四组示例输入为：
+The repository includes four example pairs:
 
 ```text
 assets/indoor_scannet_A.jpg     assets/indoor_scannet_B.jpg
@@ -84,13 +84,13 @@ assets/sacre_coeur_A.jpg        assets/sacre_coeur_B_rot180.jpg
 assets/toronto_A.jpg            assets/toronto_B_rot180.jpg
 ```
 
-对应的四组可视化结果位于 `results/`。室内图像建议使用 `models/indoor.pth`，其余示例使用 `models/outdoor.pth`。
+The corresponding visualizations are in `results/`. Use `models/indoor.pth` for indoor images and `models/outdoor.pth` for the other examples.
 
-## 评估数据
+## Evaluation data
 
-完整基准数据集因体积和各自许可证未随仓库发布。请按照 [data/README.md](data/README.md) 下载或挂载到 `data/`，或通过命令行参数指定外部路径。
+Full benchmark datasets are not included because of their size and licensing terms. Follow [data/README.md](data/README.md) to download or mount them under `data/`, or provide external paths through command-line arguments.
 
-常用目录约定如下：
+Typical directory layout:
 
 ```text
 data/megadepth/
@@ -103,9 +103,9 @@ data/satast/
 data/WxBS/
 ```
 
-## 评估命令
+## Evaluation commands
 
-所有评估脚本默认从项目内 `models/` 和 `data/` 读取文件；缺少数据时会在启动阶段报出路径错误。
+All evaluation scripts read weights from `models/` and data from `data/` by default. Missing data paths are reported at startup.
 
 ```bash
 # MegaDepth plain / rot
@@ -120,12 +120,12 @@ python eval/eval_scannet.py --mode rot
 python eval/eval_hpatches.py --mode plain
 python eval/eval_hpatches.py --mode rot
 
-# 其他基准
+# Other benchmarks
 python eval/eval_roto360.py
 python eval/eval_satast.py
 python eval/eval_wxbs.py
 
-# 显式指定外部数据目录的例子
+# Examples with external data roots
 python eval/eval_hpatches.py --hpatches_root /path/to/hpatches
 python eval/eval_satast.py \
   --satast_annotations /path/to/satast/satast_annotations_with_rot \
@@ -133,9 +133,9 @@ python eval/eval_satast.py \
 python eval/eval_wxbs.py --wxbs_root /path/to/WxBS
 ```
 
-评估结果写入当前项目的 `results/`。CUDA 评估脚本通常需要 NVIDIA GPU；运行 `--help` 可查看每个脚本的完整参数。
+Evaluation outputs are written to `results/`. CUDA evaluation scripts usually require an NVIDIA GPU. Run `--help` for the full options of each script.
 
-## 延迟测试
+## Latency benchmark
 
 ```bash
 python eval/bench_latency.py \
@@ -143,26 +143,26 @@ python eval/bench_latency.py \
   --resolution 576
 ```
 
-## 发布边界检查
+## Release checks
 
-发布前可运行：
+Run before publishing:
 
 ```bash
 python scripts/check_release.py
 ```
 
-若只检查代码边界而暂时没有权重：
+To check the release boundary without local weights:
 
 ```bash
 python scripts/check_release.py --skip-weights
 ```
 
-本公开版明确不包含：
+This public release does not include:
 
-- REDI 蒸馏实现和训练脚本；
-- 匹配模型训练、EMA、实验监控和私有数据准备代码；
-- `escnn_lib`、DINOv3 教师权重及其他训练专用依赖。
+- REDI distillation and training scripts;
+- model training, EMA, experiment monitoring, or private data preparation code;
+- `escnn_lib`, DINOv3 teacher weights, or other training-only dependencies.
 
 ## License
 
-发布到 GitHub 前，请在根目录补充项目实际采用的许可证文件，并确认示例图像、评估数据和预训练权重分别符合其来源许可证或分发条款。
+Before publishing to GitHub, add the license used by the project to the repository root. Confirm that the example images, evaluation datasets, and pretrained weights comply with their respective licenses or distribution terms.

@@ -142,12 +142,12 @@ def main():
     args.upsample_preds = False
 
     if args.single_mode:
-        # 子进程入口：只测一种模式，测完即退出、显存被驱动回收
+        # Child-process entry point: measure one mode, then exit and release GPU memory.
         run_single(args, args.single_mode)
         return
 
-    # 父进程：每种模式一个独立子进程，避免 reduce-overhead 的 CUDA Graph
-    # 显存逐模式叠加导致 OOM。
+    # Parent process: use one child process per mode to avoid CUDA Graph memory
+    # accumulation across modes and possible out-of-memory errors.
     script = os.path.abspath(__file__)
     for mode_name in MODES:
         cmd = [sys.executable, script, *sys.argv[1:], "--single-mode", mode_name]
