@@ -1,7 +1,64 @@
-# REDI-Match Public Release
+# REDI-Match
 
-This is the runnable REDI-Match release for image-matching inference, visualization, and public benchmarks.
-It includes only the inference runtime, evaluation scripts, example data, and instructions for downloading pretrained weights. Training, distillation, private data processing, and internal experiments are excluded.
+### Rotation-Equivariant Distillation for Efficient and Robust Dense Matching
+
+<div align="center">
+
+**Yinji Ge**<sup>1*</sup>, **Guixu Zheng**<sup>2*</sup>, **Wulong Guo**<sup>3</sup>, **Qian Feng**<sup>4</sup>, **Xu Wu**<sup>1</sup>, **Kai Zhou**<sup>1†</sup>, **Xinyuan Liu**<sup>1†</sup>, **Fei Xing**<sup>1†</sup>
+
+<sup>1</sup> Tsinghua University &nbsp; <sup>2</sup> Southern University of Science and Technology &nbsp; <sup>3</sup> Beihang University &nbsp; <sup>4</sup> Zhejiang University
+
+<small><sup>*</sup> Equal contribution &nbsp; <sup>†</sup> Corresponding authors</small>
+
+[![arXiv](https://img.shields.io/badge/arXiv-2606.24330-b31b1b.svg)](https://arxiv.org/abs/2606.24330)
+[![Paper](https://img.shields.io/badge/Paper-PDF-blue.svg)](https://arxiv.org/pdf/2606.24330)
+[![Weights](https://img.shields.io/badge/Weights-Hugging%20Face-yellow.svg)](https://huggingface.co/YinjiGe/REDI-Match)
+
+</div>
+
+This repository is the runnable public release of REDI-Match for dense matching inference, visualization, and benchmark evaluation. It contains the inference runtime, pretrained-weight download tools, evaluation scripts, and example data. Training, distillation, private data processing, and internal experiments are excluded.
+
+## Contents
+
+- [Abstract](#abstract)
+- [Highlights](#highlights)
+- [Visual results](#visual-results)
+- [Installation](#installation)
+- [Pretrained weights](#pretrained-weights)
+- [Demo](#demo)
+- [Evaluation](#evaluation)
+- [Benchmark results](#benchmark-results)
+- [Latency](#latency)
+- [Release scope](#release-scope)
+- [Citation](#citation)
+
+## Abstract
+
+Vision foundation models have advanced dense feature matching, but severe in-plane rotation remains challenging. REDI-Match addresses this problem with **Rotation-Equivariant Distillation (REDI)**: the semantics of a vision foundation model are distilled into a lightweight, strictly rotation-equivariant encoder. An entropy-driven decoder then identifies the canonical orientation before continuous refinement, enabling robust dense matching without rotation-augmented training.
+
+## Highlights
+
+| | |
+|---|---|
+| **Rotation robustness** | +13.89% AUC@5° on SatAst over the previous best method |
+| **Efficiency** | 1.9× faster than RoMa v2; about 41 FPS on an RTX 4090 |
+| **Compact model** | 85M parameters, compared with 425M for RoMa v2 |
+| **Equivariance** | Strict C₄ rotation-equivariant feature encoder |
+
+## Visual results
+
+The public demo produces dense correspondences for indoor, remote-sensing, and rotated outdoor image pairs:
+
+<p align="center">
+  <img src="results/indoor_scannet_symmetric.jpg" alt="Indoor matching" width="48%" />
+  <img src="results/remote_satast_symmetric.jpg" alt="Remote-sensing matching" width="48%" />
+</p>
+<p align="center">
+  <img src="results/sacre_coeur_symmetric.jpg" alt="Rotated outdoor matching" width="48%" />
+  <img src="results/toronto_symmetric.jpg" alt="Rotated city matching" width="48%" />
+</p>
+
+All generated visualizations are available in [`results/`](results/).
 
 ## Repository layout
 
@@ -38,6 +95,11 @@ pip install -r requirements-optional.txt
 
 `indoor.pth` and `outdoor.pth` are large files and should not be committed to GitHub. Download them from the Hugging Face model repository; the code repository keeps only `models/.gitkeep`.
 The pretrained weights are hosted at [`YinjiGe/REDI-Match`](https://huggingface.co/YinjiGe/REDI-Match):
+
+| Weight | Recommended use |
+|---|---|
+| `indoor.pth` | Indoor scenes such as ScanNet |
+| `outdoor.pth` | Outdoor, aerial, and remote-sensing scenes |
 
 ```bash
 pip install huggingface_hub
@@ -86,7 +148,9 @@ assets/toronto_A.jpg            assets/toronto_B_rot180.jpg
 
 The corresponding visualizations are in `results/`. Use `models/indoor.pth` for indoor images and `models/outdoor.pth` for the other examples.
 
-## Evaluation data
+## Evaluation
+
+### Data
 
 Full benchmark datasets are not included because of their size and licensing terms. Follow [data/README.md](data/README.md) to download or mount them under `data/`, or provide external paths through command-line arguments.
 
@@ -103,7 +167,7 @@ data/satast/
 data/WxBS/
 ```
 
-## Evaluation commands
+### Commands
 
 All evaluation scripts read weights from `models/` and data from `data/` by default. Missing data paths are reported at startup.
 
@@ -135,13 +199,51 @@ python eval/eval_wxbs.py --wxbs_root /path/to/WxBS
 
 Evaluation outputs are written to `results/`. CUDA evaluation scripts usually require an NVIDIA GPU. Run `--help` for the full options of each script.
 
-## Latency benchmark
+## Benchmark results
+
+The following results are reported in the paper. Unless noted otherwise, images are evaluated at 576×576 resolution and the metric is AUC.
+
+### Rotation robustness
+
+| Method | MegaDepth-C4 @5° | ScanNet-C4 @5° | HPatches-C4 @5° | Rot360 @5° | SatAst @5° |
+|---|---:|---:|---:|---:|---:|
+| RoMa v2 | 53.5 | 29.0 | 78.1 | 97.7 | 24.2 |
+| **REDI-Match** | **59.2** | **29.5** | **79.6** | **98.6** | **50.6** |
+
+### Standard benchmarks and efficiency
+
+| Method | MegaDepth @5° | ScanNet @5° | HPatches @3° | Params (M) | Latency (ms) |
+|---|---:|---:|---:|---:|---:|
+| RoMa v2 | **60.0** | **33.3** | 70.7 | 425.4 | 45.7 |
+| **REDI-Match** | 59.8 | 30.2 | **72.1** | **85.4** | **24.1** |
+
+Latency is measured on a single NVIDIA RTX 4090. See the paper for complete comparisons, protocols, and ablations.
+
+<details>
+<summary>Full rotation benchmark table</summary>
+
+| Method | MegaDepth-C4 @5° | @10° | @20° | ScanNet-C4 @5° | @10° | @20° | HPatches-C4 @3° | @5° | @10° | Rot360 @3° | @5° | @10° | SatAst @5° | @10° | @20° |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| RoMa v2 | 53.5 | 68.9 | 80.1 | 29.0 | 49.5 | 65.9 | 68.2 | 78.1 | 87.0 | 97.3 | 97.7 | 98.0 | 18.4 | 24.2 | 28.5 |
+| **REDI-Match** | **59.2** | **74.3** | **84.8** | **29.5** | **50.6** | **68.0** | **70.4** | **79.6** | **87.7** | **98.5** | **98.6** | **98.6** | **41.3** | **50.6** | **57.4** |
+
+</details>
+
+## Latency
 
 ```bash
 python eval/bench_latency.py \
   --weights models/outdoor.pth \
   --resolution 576
 ```
+
+## Release scope
+
+This public repository contains inference-only code and does not include:
+
+- REDI distillation or training scripts;
+- model training, EMA, experiment monitoring, or private data preparation code;
+- `escnn_lib`, DINOv3 teacher weights, or other training-only dependencies.
 
 ## Release checks
 
@@ -157,12 +259,21 @@ To check the release boundary without local weights:
 python scripts/check_release.py --skip-weights
 ```
 
-This public release does not include:
-
-- REDI distillation and training scripts;
-- model training, EMA, experiment monitoring, or private data preparation code;
-- `escnn_lib`, DINOv3 teacher weights, or other training-only dependencies.
-
 ## License
 
-Before publishing to GitHub, add the license used by the project to the repository root. Confirm that the example images, evaluation datasets, and pretrained weights comply with their respective licenses or distribution terms.
+Please add the license used by the project to the repository root before redistribution. Confirm that the example images, evaluation datasets, and pretrained weights comply with their respective licenses or distribution terms.
+
+## Citation
+
+If you find this work useful, please cite our paper:
+
+```bibtex
+@article{ge2026redimatch,
+  title   = {REDI-Match: Rotation-Equivariant Distillation for Efficient and Robust Dense Matching},
+  author  = {Ge, Yinji and Zheng, Guixu and Guo, Wulong and Feng, Qian and Wu, Xu and Zhou, Kai and Liu, Xinyuan and Xing, Fei},
+  journal = {arXiv preprint arXiv:2606.24330},
+  year    = {2026}
+}
+```
+
+Paper: [arXiv:2606.24330](https://arxiv.org/abs/2606.24330)
