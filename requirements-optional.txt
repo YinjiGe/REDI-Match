@@ -1,0 +1,3 @@
+# Optional CUDA acceleration. The public runtime falls back to native PyTorch.
+xformers
+fused-local-corr==0.3.211

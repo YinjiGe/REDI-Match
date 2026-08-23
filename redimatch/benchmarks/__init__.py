@@ -1,0 +1,12 @@
+from .hpatches_sequences_homog_benchmark import HpatchesHomogBenchmark
+from .roto360 import Roto360Benchmark
+Roto360HomogBenchmark = Roto360Benchmark
+from .scannet_benchmark import ScanNetBenchmark
+from .scannet_rot_benchmark import ScanNetRotBenchmark
+from .scannet1500 import ScanNet1500
+from .megadepth_pose_estimation_benchmark import MegaDepthPoseEstimationBenchmark
+from .megadepth_rot_benchmark import MegaDepthPoseEstimationRotBenchmark
+from .megadepth_dense_benchmark import MegadepthDenseBenchmark
+from .megadepth_pose_estimation_benchmark_poselib import Mega1500PoseLibBenchmark
+from .satast import SatAst
+from .wxbs import WxBSBenchmark

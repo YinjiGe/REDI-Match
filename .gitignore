@@ -1,0 +1,15 @@
+# Python cache and local tooling
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Benchmark datasets are downloaded separately
+data/*
+!data/README.md
+
+# Large checkpoints are distributed through Hugging Face
+models/*.pth
+models/*.pt
+
+# Local logs
+*.log

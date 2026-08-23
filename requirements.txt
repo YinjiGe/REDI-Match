@@ -1,0 +1,14 @@
+torch==2.11.0
+torchvision==0.26.0
+numpy
+einops
+opencv-python
+Pillow
+kornia
+loguru
+tqdm
+matplotlib
+h5py
+poselib
+wxbs_benchmark
+huggingface_hub
