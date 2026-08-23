@@ -1,6 +1,6 @@
 # REDI-Match
 
-### Rotation-Equivariant Distillation for Efficient and Robust Dense Matching
+### 🎓 Rotation-Equivariant Distillation for Efficient and Robust Dense Matching
 
 <div align="center">
 
@@ -19,36 +19,36 @@
 
 This repository is the runnable public release of REDI-Match for dense matching inference, visualization, and benchmark evaluation. It contains the inference runtime, pretrained-weight download tools, evaluation scripts, and example data. Training, distillation, private data processing, and internal experiments are excluded.
 
-## Contents
+## 📑 Contents
 
-- [Abstract](#abstract)
-- [Highlights](#highlights)
-- [Visual results](#visual-results)
-- [Installation](#installation)
-- [Pretrained weights](#pretrained-weights)
-- [Demo](#demo)
-- [Evaluation](#evaluation)
-- [Benchmark results](#benchmark-results)
-- [Latency](#latency)
-- [Release scope](#release-scope)
-- [TODO](#todo)
-- [Citation](#citation)
-- [Acknowledgments](#-acknowledgments)
+- [📄 Abstract](#-abstract)
+- [🎯 Highlights](#-highlights)
+- [🖼 Visual results](#-visual-results)
+- [⚙ Installation](#-installation)
+- [📦 Pretrained weights](#-pretrained-weights)
+- [🎨 Demo](#-demo)
+- [📊 Evaluation](#-evaluation)
+- [📈 Benchmark results](#-benchmark-results)
+- [⏱ Latency](#-latency)
+- [🧩 Release scope](#-release-scope)
+- [✅ TODO](#-todo)
+- [📝 Citation](#-citation)
+- [🙏 Acknowledgments](#-acknowledgments)
 
-## Abstract
+## 📄 Abstract
 
 Vision foundation models have advanced dense feature matching, but severe in-plane rotation remains challenging. REDI-Match addresses this problem with **Rotation-Equivariant Distillation (REDI)**: the semantics of a vision foundation model are distilled into a lightweight, strictly rotation-equivariant encoder. An entropy-driven decoder then identifies the canonical orientation before continuous refinement, enabling robust dense matching without rotation-augmented training.
 
-## Highlights
+## 🎯 Highlights
 
 | | |
 |---|---|
-| **Rotation robustness** | +13.89% AUC@5° on SatAst over the previous best method |
-| **Efficiency** | 1.9× faster than RoMa v2; about 41 FPS on an RTX 4090 |
-| **Compact model** | 85M parameters, compared with 425M for RoMa v2 |
-| **Equivariance** | Strict C₄ rotation-equivariant feature encoder |
+| ⚡ **Rotation robustness** | +13.89% AUC@5° on SatAst over the previous best method |
+| 🚀 **Efficiency** | 1.9× faster than RoMa v2; about 41 FPS on an RTX 4090 |
+| 🧩 **Compact model** | 85M parameters, compared with 425M for RoMa v2 |
+| 🔄 **Equivariance** | Strict C₄ rotation-equivariant feature encoder |
 
-## Visual results
+## 🖼 Visual results
 
 The public demo produces dense correspondences for indoor, remote-sensing, and rotated outdoor image pairs:
 
@@ -63,7 +63,7 @@ The public demo produces dense correspondences for indoor, remote-sensing, and r
 
 All generated visualizations are available in [`results/`](results/).
 
-## Repository layout
+## 🗂 Repository layout
 
 ```text
 demo/                         # Matching visualization demo
@@ -77,7 +77,7 @@ scripts/check_release.py      # Check release boundaries and weight compatibilit
 models/                       # Local weight directory (*.pth is not tracked by Git)
 ```
 
-## Installation
+## ⚙ Installation
 
 Python 3.12 and a CUDA environment are recommended:
 
@@ -94,7 +94,7 @@ For optional CUDA extensions, first confirm compatibility with your local PyTorc
 pip install -r requirements-optional.txt
 ```
 
-## Pretrained weights
+## 📦 Pretrained weights
 
 `indoor.pth` and `outdoor.pth` are large files and should not be committed to GitHub. Download them from the Hugging Face model repository; the code repository keeps only `models/.gitkeep`.
 The pretrained weights are hosted at [`YinjiGe/REDI-Match`](https://huggingface.co/YinjiGe/REDI-Match):
@@ -120,7 +120,7 @@ models/outdoor.pth
 
 For a private model repository, run `huggingface-cli login` first or pass an access token with `--token`.
 
-## Demo
+## 🎨 Demo
 
 Run the default example. It uses the `remote_satast` image pair and the outdoor weights:
 
@@ -151,9 +151,9 @@ assets/toronto_A.jpg            assets/toronto_B_rot180.jpg
 
 The corresponding visualizations are in `results/`. Use `models/indoor.pth` for indoor images and `models/outdoor.pth` for the other examples.
 
-## Evaluation
+## 📊 Evaluation
 
-### Data
+### 🗃 Data
 
 Full benchmark datasets are not included because of their size and licensing terms. Follow [data/README.md](data/README.md) to download or mount them under `data/`, or provide external paths through command-line arguments.
 
@@ -170,7 +170,7 @@ data/satast/
 data/WxBS/
 ```
 
-### Commands
+### ▶ Commands
 
 All evaluation scripts read weights from `models/` and data from `data/` by default. Missing data paths are reported at startup.
 
@@ -202,18 +202,18 @@ python eval/eval_wxbs.py --wxbs_root /path/to/WxBS
 
 Evaluation outputs are written to `results/`. CUDA evaluation scripts usually require an NVIDIA GPU. Run `--help` for the full options of each script.
 
-## Benchmark results
+## 📈 Benchmark results
 
 The following results are reported in the paper. Unless noted otherwise, images are evaluated at 576×576 resolution and the metric is AUC.
 
-### Rotation robustness
+### 🔄 Rotation robustness
 
 | Method | MegaDepth-C4 @5° | ScanNet-C4 @5° | HPatches-C4 @5° | Rot360 @5° | SatAst @5° |
 |---|---:|---:|---:|---:|---:|
 | RoMa v2 | 53.5 | 29.0 | 78.1 | 97.7 | 24.2 |
 | **REDI-Match** | **59.2** | **29.5** | **79.6** | **98.6** | **41.3** |
 
-### Standard benchmarks and efficiency
+### ⚡ Standard benchmarks and efficiency
 
 | Method | MegaDepth @5° | ScanNet @5° | HPatches @3° | Params (M) | Latency (ms) |
 |---|---:|---:|---:|---:|---:|
@@ -232,7 +232,7 @@ Latency is measured on a single NVIDIA RTX 4090. See the paper for complete comp
 
 </details>
 
-## Latency
+## ⏱ Latency
 
 ```bash
 python eval/bench_latency.py \
@@ -240,7 +240,7 @@ python eval/bench_latency.py \
   --resolution 576
 ```
 
-## Release scope
+## 🧩 Release scope
 
 This public repository contains inference-only code and does not include:
 
@@ -248,7 +248,7 @@ This public repository contains inference-only code and does not include:
 - model training, EMA, experiment monitoring, or private data preparation code;
 - `escnn_lib`, DINOv3 teacher weights, or other training-only dependencies.
 
-## TODO
+## ✅ TODO
 
 - [x] Release benchmark evaluation scripts
 - [x] Release pretrained model weights
@@ -258,11 +258,16 @@ This public repository contains inference-only code and does not include:
 - [ ] Release model training code
 - [ ] Release model training datasets
 
-## License
+## 📜 License
 
-Please add the license used by the project to the repository root before redistribution. Confirm that the example images, evaluation datasets, and pretrained weights comply with their respective licenses or distribution terms.
+The REDI-Match source code is released under the [Apache License 2.0](LICENSE).
 
-## Citation
+Pretrained weights, example images, and evaluation datasets may be subject to
+their own licenses and distribution terms. Third-party source files retain
+their original copyright notices and license requirements. Check the
+corresponding notices before redistribution.
+
+## 📝 Citation
 
 <div align="center">
 
