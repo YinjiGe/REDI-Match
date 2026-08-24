@@ -14,6 +14,7 @@ data/
 ├── hpatches/
 ├── roto360/
 ├── satast/
+└── WxBS/
 ```
 
 The evaluation scripts also accept explicit dataset roots where supported. See the main README for the commands.
