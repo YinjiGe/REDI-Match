@@ -193,9 +193,11 @@ Evaluation outputs are written to `results/`. CUDA evaluation scripts usually re
 
 ## 📈 Benchmark results
 
-The following results are reported in the paper. Unless noted otherwise, images are evaluated at 576×576 resolution and the metric is AUC.
+The following results are reported in the paper. For a fair comparison, all methods compared in the paper are evaluated at the same fixed resolution of 576 × 576. This avoids artificially upsampling images to obtain higher accuracy. The metric is AUC unless noted otherwise.
 
 ### 🔄 Rotation robustness
+
+> **SatAst note:** The SatAst metrics in the paper have not yet been updated. Our latest tests indicate that the SatAst @5° score should be above 46.
 
 | Method | MegaDepth-C4 @5° | ScanNet-C4 @5° | HPatches-C4 @5° | Rot360 @5° | SatAst @5° |
 |---|---:|---:|---:|---:|---:|
