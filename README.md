@@ -21,7 +21,6 @@ This repository is the runnable public release of REDI-Match for dense matching 
 ## 📑 Contents
 
 - [📄 Abstract](#-abstract)
-- [🎯 Highlights](#-highlights)
 - [🖼 Visual results](#-visual-results)
 - [⚙ Installation](#-installation)
 - [📦 Pretrained weights](#-pretrained-weights)
@@ -37,15 +36,6 @@ This repository is the runnable public release of REDI-Match for dense matching 
 ## 📄 Abstract
 
 Vision foundation models have advanced dense feature matching, but severe in-plane rotation remains challenging. REDI-Match addresses this problem with **Rotation-Equivariant Distillation (REDI)**: the semantics of a vision foundation model are distilled into a lightweight, strictly rotation-equivariant encoder. An entropy-driven decoder then identifies the canonical orientation before continuous refinement, enabling robust dense matching without rotation-augmented training.
-
-## 🎯 Highlights
-
-| | |
-|---|---|
-| ⚡ **Rotation robustness** | +13.89% AUC@5° on SatAst over the previous best method |
-| 🚀 **Efficiency** | 1.9× faster than RoMa v2; about 41 FPS on an RTX 4090 |
-| 🧩 **Compact model** | 85M parameters, compared with 425M for RoMa v2 |
-| 🔄 **Equivariance** | Strict C₄ rotation-equivariant feature encoder |
 
 ## 🖼 Visual results
 
