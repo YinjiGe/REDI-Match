@@ -13,7 +13,6 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2606.24330-b31b1b.svg)](https://arxiv.org/abs/2606.24330)
 [![Paper](https://img.shields.io/badge/Paper-PDF-blue.svg)](https://arxiv.org/pdf/2606.24330)
 [![Weights](https://img.shields.io/badge/Weights-Hugging%20Face-yellow.svg)](https://huggingface.co/YinjiGe/REDI-Match)
-[![GitHub stars](https://img.shields.io/github/stars/YinjiGe/REDI-Match-0823?style=flat-square&logo=github)](https://github.com/YinjiGe/REDI-Match-0823)
 
 </div>
 
